@@ -1,86 +1,40 @@
 #include "lists.h"
-#include <stdio.h>
-
-size_t looped_listint_len(const listint_t *head);
-size_t print_listint_safe(const listint_t *head);
 
 /**
- * looped_listint_len - Counts the numbers of  nodes
- * @head: A pointer to the head of the listint_t to check.
+ * free_listint_safe - Free a linked list
+ * @b: pointer to the  node in the linked list
  *
- * Return: If not looped - 0
+ * Return: number of elements in the freed list
  */
-size_t looped_listint_len(const listint_t *head)
+size_t free_listint_safe(listint_t **b)
 {
-	const listint_t *kwame, *emma;
-	size_t nodes = 1;
+	size_t len = 0;
+	int diff;
+	listint_t *temp;
 
-	if (head == NULL || head->next == NULL)
+	if (!b || !*b)
 		return (0);
 
-	kwame = head->next;
-	emma = (head->next)->next;
-
-	while (emma)
+	while (*b)
 	{
-		if (kwame == emma)
+		diff = *b - (*b)->next;
+		if (diff > 0)
 		{
-			kwame = head;
-			while (kwame != emma)
-			{
-				nodes++;
-				kwame = kwame->next;
-				emma = emma->next;
-			}
-
-			kwame = kwame->next;
-			while (kwame != emma)
-			{
-				nodes++;
-				kwame = kwame->next;
-			}
-
-			return (nodes);
+			temp = (*b)->next;
+			free(*b);
+			*b = temp;
+			len++;
 		}
-
-		kwame = kwame->next;
-		emma = (emma->next)->next;
-	}
-
-	return (0);
-}
-
-/**
- * print_listint_safe - Prints a listint_t list.
- * @head: A pointer to the head of the listint_t list.
- *
- * Return: The number of nodes in the list.
- */
-size_t print_listint_safe(const listint_t *head)
-{
-	size_t nodes, index = 0;
-
-	nodes = looped_listint_len(head);
-
-	if (nodes == 0)
-	{
-		for (; head != NULL; nodes++)
+		else
 		{
-			printf("[%p] %d\n", (void *)head, head->n);
-			head = head->next;
+			free(*b);
+			*b = NULL;
+			len++;
+			break;
 		}
 	}
 
-	else
-	{
-		for (index = 0; index < nodes; index++)
-		{
-			printf("[%p] %d\n", (void *)head, head->n);
-			head = head->next;
-		}
+	*b = NULL;
 
-		printf("-> [%p] %d\n", (void *)head, head->n);
-	}
-
-	return (nodes);
+	return (len);
 }

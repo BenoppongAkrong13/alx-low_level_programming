@@ -1,40 +1,34 @@
 #include "lists.h"
 
 /**
- * free_listint_safe - to free a linked list
- * @b: pointer to the first element in the linked list
+ * find_listint_loop - finds the loop in a linked list
+ * @head: element of move and stay
  *
- * Return: numbers  in the free_listint_safe
+ * Return: NULL
  */
-size_t free_listint_safe(listint_t **b)
+listint_t *find_listint_loop(listint_t *head)
 {
-	size_t len = 0;
-	int diff;
-	listint_t *temp;
+	listint_t *move = head;
+	listint_t *stay = head;
 
-	if (!b || !*b)
-		return (0);
+	if (!head)
+		return (NULL);
 
-	while (*b)
+	while (move && stay && stay->next)
 	{
-		diff = *b - (*b)->next;
-		if (diff > 0)
+		stay = stay->next->next;
+		move = move->next;
+		if (stay == move)
 		{
-			temp = (*b)->next;
-			free(*b);
-			*b = temp;
-			len++;
-		}
-		else
-		{
-			free(*b);
-			*b = NULL;
-			len++;
-			break;
+			move = head;
+			while (move != stay)
+			{
+				move = move->next;
+				stay = stay->next;
+			}
+			return (stay);
 		}
 	}
 
-	*b = NULL;
-
-	return (len);
+	return (NULL);
 }

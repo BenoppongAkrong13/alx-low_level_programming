@@ -5,10 +5,10 @@ size_t looped_listint_len(const listint_t *head);
 size_t print_listint_safe(const listint_t *head);
 
 /**
- * looped_listint_len - Counts the number of nodes
- * @head: A pointer to the head to access.
+ * looped_listint_len - Counts the  nodes
+ * @head: A pointer to the head of the listint_t to check.
  *
- * Return:  loop - 0.
+ * Return: loop - 0.
  */
 size_t looped_listint_len(const listint_t *head)
 {
@@ -33,17 +33,17 @@ size_t looped_listint_len(const listint_t *head)
 				emma = emma->next;
 			}
 
-			kwame = emma->next;
+			kwame = kwame->next;
 			while (kwame != emma)
 			{
 				nodes++;
-				emma = kwame->next;
+				kwame = kwame->next;
 			}
 
 			return (nodes);
 		}
 
-		kwame = emma->next;
+		kwame = kwame->next;
 		emma = (emma->next)->next;
 	}
 
@@ -51,10 +51,10 @@ size_t looped_listint_len(const listint_t *head)
 }
 
 /**
- * print_listint_safe - Prints a listint_t list
- * @head: A pointer to the head of the ptint_listint_t list.
+ * print_listint_safe - Prints a listint_t listd
+ * @head: pointer to the head of the listint_t list.
  *
- * Return: Number of nodes
+ * Return:  nodes
  */
 size_t print_listint_safe(const listint_t *head)
 {
