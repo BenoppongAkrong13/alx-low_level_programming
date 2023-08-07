@@ -297,7 +297,7 @@ int main(int __attribute__((__unused__)) argc, char *argv[])
 	if (t == -1)
 	{
 		free(header);
-		close_elf(o);
+		close_elf(p);
 		dprintf(STDERR_FILENO, "Error: `%s`: No such file\n", argv[1]);
 		exit(98);
 	}
