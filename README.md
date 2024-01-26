@@ -1,1 +1,1 @@
-C - Pointers, arrays and strings
+projects for all alx low level program
